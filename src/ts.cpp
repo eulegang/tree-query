@@ -1,5 +1,6 @@
 #include <dlfcn.h>
 #include <format>
+#include <iostream>
 #include <tree_sitter/api.h>
 
 #include "ts.h"
@@ -29,4 +30,27 @@ ts::lang::lang(std::filesystem::path path, std::string_view name)
   _lang = lang();
 }
 
-ts::lang::~lang() { dlclose(_handle); }
+ts::lang::~lang() {
+  ts_language_delete(_lang);
+  dlclose(_handle);
+}
+
+ts::symbols ts::lang::list_symbols() {
+  int len = ts_language_symbol_count(_lang);
+
+  return ts::symbols(len, _lang);
+}
+
+std::optional<TSLanguageMetadata> ts::lang::metadata() {
+  auto md = ts_language_metadata(_lang);
+  if (md) {
+    return *md;
+  } else {
+    return std::nullopt;
+  }
+}
+
+std::ostream &operator<<(std::ostream &os, const TSLanguageMetadata &metadata) {
+  return os << (int)metadata.major_version << "." << (int)metadata.minor_version
+            << "." << (int)metadata.patch_version;
+}
