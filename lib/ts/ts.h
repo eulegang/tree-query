@@ -15,6 +15,8 @@ class tree final {
 
 public:
   ~tree();
+
+  operator std::string();
 };
 
 struct symbol {

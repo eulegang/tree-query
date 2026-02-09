@@ -73,5 +73,5 @@ void action_tree(registry &reg, Cli &cli) {
   ts::parser parser{lang};
   ts::tree tree = parser.parse(file);
 
-  // std::cout << view << std::endl;
+  std::cout << (std::string)tree << std::endl;
 }
