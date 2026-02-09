@@ -12,5 +12,6 @@ target_link_libraries(unit PRIVATE ${GTEST_LDFLAGS})
 target_compile_options(unit PRIVATE ${GTEST_CFLAGS})
 target_link_libraries(unit PRIVATE ${TREESITTER_LDFLAGS})
 target_compile_options(unit PRIVATE ${TREESITTER_CFLAGS})
+target_link_libraries(unit PUBLIC ts)
 
 add_test(unit unit)

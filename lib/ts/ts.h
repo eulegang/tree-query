@@ -17,16 +17,6 @@ public:
   ~tree();
 };
 
-class parser final {
-  TSParser *_parser;
-
-public:
-  parser(const TSLanguage *lang);
-  ~parser();
-
-  tree parse(std::string_view content);
-};
-
 struct symbol {
   enum class type {
     Regular,
@@ -80,6 +70,8 @@ class lang final {
   const TSLanguage *_lang;
   void *_handle;
 
+  friend class parser;
+
 public:
   lang(std::filesystem::path path, std::string_view name);
   ~lang();
@@ -87,6 +79,17 @@ public:
   std::optional<TSLanguageMetadata> metadata();
   symbols list_symbols();
 };
+
+class parser final {
+  TSParser *_parser;
+
+public:
+  parser(lang &);
+  ~parser();
+
+  tree parse(std::string_view content);
+};
+
 } // namespace ts
 
 std::ostream &operator<<(std::ostream &, const TSLanguageMetadata &);

@@ -27,6 +27,7 @@ struct Cli {
   bool version;
   bool verbose;
   std::string arg;
+  std::string type;
 
   Cli(int argc, char *argv[]);
   Cli(std::initializer_list<std::string_view>);

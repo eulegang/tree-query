@@ -5,8 +5,8 @@ struct Processor {
   enum class State {
     Init,
     Action,
-    Arg,
     Flags,
+    Type,
     Ignore,
   };
 
@@ -27,10 +27,10 @@ struct Processor {
         state = State::Flags;
       } else if (arg == "info") {
         cli->action = Cli::Action::Info;
-        state = State::Arg;
+        state = State::Flags;
       } else if (arg == "tree") {
         cli->action = Cli::Action::Tree;
-        state = State::Arg;
+        state = State::Flags;
       } else if (arg == "-h" || arg == "--help") {
         cli->help = true;
         state = State::Ignore;
@@ -40,16 +40,20 @@ struct Processor {
       }
       break;
 
-    case State::Arg:
-      cli->arg = arg;
-      state = State::Flags;
+    case State::Flags:
+
+      if (arg == "--verbose" || arg == "-v") {
+        cli->verbose = true;
+      } else if (arg == "-t" || arg == "--type") {
+        state = State::Type;
+      } else {
+        cli->arg = arg;
+      }
 
       break;
 
-    case State::Flags:
-      if (arg == "--verbose" || arg == "-v") {
-        cli->verbose = true;
-      }
+    case State::Type:
+      cli->type = arg;
 
       break;
 
@@ -65,6 +69,10 @@ struct Processor {
 
     if (cli->action == Cli::Action::Tree && cli->arg.empty()) {
       throw Cli::Exception("need a file");
+    }
+
+    if (cli->action == Cli::Action::Tree && cli->type.empty()) {
+      throw Cli::Exception("need type to tree file");
     }
   }
 };

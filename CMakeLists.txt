@@ -20,6 +20,19 @@ pkg_check_modules(TREESITTER REQUIRED tree-sitter)
 target_link_libraries(tq PRIVATE ${TREESITTER_LDFLAGS})
 target_compile_options(tq PRIVATE ${TREESITTER_CFLAGS})
 
+include_directories(lib/ts)
+file(GLOB TS_SRC "lib/ts/*.cpp")
+add_library(ts ${TS_SRC})
+target_link_libraries(ts PRIVATE ${TREESITTER_LDFLAGS})
+target_compile_options(ts PRIVATE ${TREESITTER_CFLAGS})
+
+include_directories(lib/mfile)
+file(GLOB MFILE_SRC "lib/mfile/*.cpp")
+add_library(mfile ${MFILE_SRC})
+
+target_link_libraries(tq PUBLIC ts)
+target_link_libraries(tq PUBLIC mfile)
+
 
 include(cmake/tests.cmake)
 

@@ -7,23 +7,6 @@
 
 using LangHandle = const TSLanguage *(*)();
 
-ts::tree::~tree() {
-  if (_tree) {
-    ts_tree_delete(_tree);
-  }
-}
-
-ts::parser::parser(const TSLanguage *lang) {
-  _parser = ts_parser_new();
-
-  if (!_parser)
-    throw std::bad_alloc();
-
-  ts_parser_set_language(_parser, lang);
-}
-
-ts::parser::~parser() { ts_parser_delete(_parser); }
-
 ts::lang::lang(std::filesystem::path path, std::string_view name)
     : _name{name} {
   _handle = dlopen(path.c_str(), RTLD_NOW | RTLD_LOCAL);

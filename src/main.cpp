@@ -68,7 +68,10 @@ void action_info(registry &reg, Cli &cli) {
 
 void action_tree(registry &reg, Cli &cli) {
   map_file file(cli.arg);
-  std::string_view view{file};
 
-  std::cout << view << std::endl;
+  ts::lang lang = reg.load(cli.type);
+  ts::parser parser{lang};
+  ts::tree tree = parser.parse(file);
+
+  // std::cout << view << std::endl;
 }
