@@ -28,6 +28,9 @@ struct Processor {
       } else if (arg == "info") {
         cli->action = Cli::Action::Info;
         state = State::Arg;
+      } else if (arg == "tree") {
+        cli->action = Cli::Action::Tree;
+        state = State::Arg;
       } else if (arg == "-h" || arg == "--help") {
         cli->help = true;
         state = State::Ignore;
@@ -58,6 +61,10 @@ struct Processor {
   void finalize() {
     if (cli->action == Cli::Action::Info && cli->arg.empty()) {
       throw Cli::Exception("need language argument");
+    }
+
+    if (cli->action == Cli::Action::Tree && cli->arg.empty()) {
+      throw Cli::Exception("need a file");
     }
   }
 };

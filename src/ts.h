@@ -6,12 +6,25 @@
 #include <string>
 #include <tree_sitter/api.h>
 namespace ts {
+
+class tree final {
+  TSTree *_tree;
+  friend class parser;
+
+  tree(TSTree *tree) : _tree{tree} {}
+
+public:
+  ~tree();
+};
+
 class parser final {
   TSParser *_parser;
 
 public:
   parser(const TSLanguage *lang);
   ~parser();
+
+  tree parse(std::string_view content);
 };
 
 struct symbol {

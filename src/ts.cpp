@@ -7,6 +7,12 @@
 
 using LangHandle = const TSLanguage *(*)();
 
+ts::tree::~tree() {
+  if (_tree) {
+    ts_tree_delete(_tree);
+  }
+}
+
 ts::parser::parser(const TSLanguage *lang) {
   _parser = ts_parser_new();
 

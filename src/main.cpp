@@ -1,12 +1,13 @@
 #include <iostream>
-#include <tree_sitter/api.h>
 
 #include "cli.h"
+#include "map_file.h"
 #include "registry.h"
 #include "ts.h"
 
 void action_list(registry &reg, Cli &cli);
 void action_info(registry &reg, Cli &cli);
+void action_tree(registry &reg, Cli &cli);
 
 int main(int argc, char *argv[]) {
   try {
@@ -29,6 +30,9 @@ int main(int argc, char *argv[]) {
       break;
     case Cli::Action::Info:
       action_info(reg, cli);
+      break;
+    case Cli::Action::Tree:
+      action_tree(reg, cli);
       break;
     }
   } catch (Cli::Exception e) {
@@ -60,4 +64,11 @@ void action_info(registry &reg, Cli &cli) {
       }
     }
   }
+}
+
+void action_tree(registry &reg, Cli &cli) {
+  map_file file(cli.arg);
+  std::string_view view{file};
+
+  std::cout << view << std::endl;
 }

@@ -10,6 +10,7 @@ struct Cli {
   enum class Action {
     List,
     Info,
+    Tree,
   };
 
   class Exception : public std::exception {
