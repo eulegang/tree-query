@@ -8,6 +8,7 @@ project(tree-query
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(ExternalProject)
 
 find_package(PkgConfig REQUIRED)
 
@@ -26,12 +27,15 @@ add_library(ts ${TS_SRC})
 target_link_libraries(ts PRIVATE ${TREESITTER_LDFLAGS})
 target_compile_options(ts PRIVATE ${TREESITTER_CFLAGS})
 
-include_directories(lib/mfile)
-file(GLOB MFILE_SRC "lib/mfile/*.cpp")
-add_library(mfile ${MFILE_SRC})
+pkg_check_modules(MFILE REQUIRED mfile)
+
+# include_directories(lib/mfile)
+# file(GLOB MFILE_SRC "lib/mfile/*.cpp")
+# add_library(mfile ${MFILE_SRC})
 
 target_link_libraries(tq PUBLIC ts)
-target_link_libraries(tq PUBLIC mfile)
+target_link_libraries(tq PUBLIC ${MFILE_LDFLAGS})
+target_compile_options(tq PUBLIC ${MFILE_CFLAGS})
 
 
 include(cmake/tests.cmake)

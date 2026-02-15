@@ -1,10 +1,10 @@
 #include "cli.h"
-#include "map_file.h"
+#include "mfile.h"
 #include "registry.h"
 #include <iostream>
 
 void action_tree(registry &reg, Cli &cli) {
-  map_file file(cli.arg);
+  mfile file(cli.arg);
 
   ts::lang lang = reg.load(cli.type);
   ts::parser parser{lang};
