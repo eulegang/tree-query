@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
       action_tree(state, cli);
       break;
     }
-  } catch (Cli::Exception e) {
+  } catch (const Cli::Exception &e) {
     std::cerr << e.what() << std::endl;
     return 1;
   }
