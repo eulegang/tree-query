@@ -104,7 +104,7 @@ ext_pred mapping::rev(const std::string &type) {
   return res;
 }
 
-bool ext_pred::applies(std::filesystem::path &path) const {
+bool ext_pred::applies(const std::filesystem::path &path) const {
   auto ext = path.extension().string();
   if (ext.empty()) {
     return false;

@@ -35,6 +35,10 @@ int main(int argc, char *argv[]) {
     case Cli::Action::Tree:
       action_tree(state, cli);
       break;
+
+    case Cli::Action::Query:
+      action_query(state, cli);
+      break;
     }
   } catch (const Cli::Exception &e) {
     std::cerr << e.what() << std::endl;

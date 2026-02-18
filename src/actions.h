@@ -11,5 +11,6 @@ struct state {
 void action_list(state &state, Cli &cli);
 void action_info(state &state, Cli &cli);
 void action_tree(state &state, Cli &cli);
+void action_query(state &state, Cli &cli);
 
 #endif

@@ -1,0 +1,7 @@
+
+(preproc_include 
+  [
+    (string_literal) @user 
+    (system_lib_string) @sys 
+  ]
+) @include

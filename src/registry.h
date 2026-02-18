@@ -14,7 +14,7 @@ class ext_pred final {
   ext_pred(std::string exts) : _exts{exts} {}
 
 public:
-  bool applies(std::filesystem::path &) const;
+  bool applies(const std::filesystem::path &) const;
 };
 
 class mapping {

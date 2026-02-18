@@ -31,6 +31,9 @@ struct Processor {
       } else if (arg == "tree") {
         cli->action = Cli::Action::Tree;
         state = State::Flags;
+      } else if (arg == "query") {
+        cli->action = Cli::Action::Query;
+        state = State::Flags;
       } else if (arg == "-h" || arg == "--help") {
         cli->help = true;
         state = State::Ignore;

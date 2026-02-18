@@ -11,6 +11,7 @@ struct Cli {
     List,
     Info,
     Tree,
+    Query,
   };
 
   class Exception : public std::exception {
