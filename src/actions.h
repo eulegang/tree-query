@@ -1,3 +1,5 @@
+#ifndef _TQ_ACTIONS
+#define _TQ_ACTIONS
 #include "cli.h"
 #include "registry.h"
 
@@ -9,3 +11,5 @@ struct state {
 void action_list(state &state, Cli &cli);
 void action_info(state &state, Cli &cli);
 void action_tree(state &state, Cli &cli);
+
+#endif
