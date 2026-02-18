@@ -5,16 +5,12 @@ project(tree-query
   DESCRIPTION "query a codebase using tree sitter"
 )
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 include(ExternalProject)
 
 find_package(PkgConfig REQUIRED)
 
 file(GLOB EXEC_SRC "src/*.cpp")
 add_executable(tq ${EXEC_SRC})
-add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 include_directories(src/)
 
 pkg_check_modules(TREESITTER REQUIRED tree-sitter)
