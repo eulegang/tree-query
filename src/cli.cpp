@@ -54,6 +54,7 @@ struct Processor {
 
     case State::Type:
       cli->type = arg;
+      state = State::Flags;
 
       break;
 
