@@ -3,12 +3,24 @@
 
 #include "ts.h"
 #include <filesystem>
+#include <map>
 #include <string>
 #include <tree_sitter/api.h>
 #include <vector>
 
-struct registry {
+class mapping {
+  std::map<std::string, std::string> exts;
+
+public:
+  mapping();
+
+  std::optional<std::string> resolve(std::filesystem::path &);
+};
+
+class registry {
   std::vector<std::filesystem::path> paths;
+
+public:
   registry();
 
   std::vector<std::string> types();

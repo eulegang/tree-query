@@ -62,3 +62,25 @@ ts::lang registry::load(std::string_view name) {
 
   return ts::lang(*path, name);
 }
+
+mapping::mapping() {
+  // Default mapping currently just my local grammars
+  exts[".cpp"] = "cpp";
+  exts[".hpp"] = "cpp";
+  exts[".h"] = "cpp";
+  exts[".c"] = "c";
+  exts[".sh"] = "bash";
+  exts[".js"] = "javascript";
+  exts[".ts"] = "typescript";
+  exts[".tsx"] = "tsx";
+  exts[".lua"] = "lua";
+  exts[".py"] = "python";
+}
+
+std::optional<std::string> mapping::resolve(std::filesystem::path &path) {
+  if (const auto ext = path.extension(); exts.contains(ext)) {
+    return exts[ext];
+  } else {
+    return std::nullopt;
+  }
+}

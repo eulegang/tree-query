@@ -1,6 +1,11 @@
 #include "cli.h"
 #include "registry.h"
 
-void action_list(registry &reg, Cli &cli);
-void action_info(registry &reg, Cli &cli);
-void action_tree(registry &reg, Cli &cli);
+struct state {
+  registry reg;
+  mapping map;
+};
+
+void action_list(state &state, Cli &cli);
+void action_info(state &state, Cli &cli);
+void action_tree(state &state, Cli &cli);

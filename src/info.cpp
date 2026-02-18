@@ -1,10 +1,10 @@
 #include <iostream>
 
+#include "actions.h"
 #include "cli.h"
-#include "registry.h"
 
-void action_info(registry &reg, Cli &cli) {
-  ts::lang lang = reg.load(cli.arg);
+void action_info(state &state, Cli &cli) {
+  ts::lang lang = state.reg.load(cli.arg);
 
   auto md = lang.metadata();
 

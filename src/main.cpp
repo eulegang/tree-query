@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
 
     Cli cli(argc, argv);
     registry reg;
+    mapping map;
 
     if (cli.help) {
       std::cerr << "tq [info | list]" << std::endl;
@@ -19,15 +20,20 @@ int main(int argc, char *argv[]) {
       std::cerr << "pre-beta" << std::endl;
     }
 
+    state state{
+        .reg = reg,
+        .map = map,
+    };
+
     switch (cli.action) {
     case Cli::Action::List:
-      action_list(reg, cli);
+      action_list(state, cli);
       break;
     case Cli::Action::Info:
-      action_info(reg, cli);
+      action_info(state, cli);
       break;
     case Cli::Action::Tree:
-      action_tree(reg, cli);
+      action_tree(state, cli);
       break;
     }
   } catch (Cli::Exception e) {

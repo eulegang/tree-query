@@ -70,10 +70,6 @@ struct Processor {
     if (cli->action == Cli::Action::Tree && cli->arg.empty()) {
       throw Cli::Exception("need a file");
     }
-
-    if (cli->action == Cli::Action::Tree && cli->type.empty()) {
-      throw Cli::Exception("need type to tree file");
-    }
   }
 };
 
