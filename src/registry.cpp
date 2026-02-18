@@ -65,22 +65,56 @@ ts::lang registry::load(std::string_view name) {
 
 mapping::mapping() {
   // Default mapping currently just my local grammars
-  exts[".cpp"] = "cpp";
-  exts[".hpp"] = "cpp";
-  exts[".h"] = "cpp";
-  exts[".c"] = "c";
-  exts[".sh"] = "bash";
-  exts[".js"] = "javascript";
-  exts[".ts"] = "typescript";
-  exts[".tsx"] = "tsx";
-  exts[".lua"] = "lua";
-  exts[".py"] = "python";
+  exts.assign({
+      {".cpp", "cpp"},
+      {".hpp", "cpp"},
+      {".h", "cpp"},
+      {".h", "c"},
+      {".c", "c"},
+      {".sh", "bash"},
+      {".zsh", "bash"}, // hack zsh doesn't exist on my system.
+      {".js", "javascript"},
+      {".ts", "typescript"},
+      {".tsx", "typescript"},
+      {".lua", "lua"},
+      {".py", "python"},
+  });
 }
 
 std::optional<std::string> mapping::resolve(std::filesystem::path &path) {
-  if (const auto ext = path.extension(); exts.contains(ext)) {
-    return exts[ext];
-  } else {
-    return std::nullopt;
+  const auto target = path.extension();
+  for (const auto &[ext, type] : exts) {
+    if (ext == target) {
+      return type;
+    }
   }
+
+  return std::nullopt;
+}
+
+ext_pred mapping::rev(const std::string &type) {
+  std::string res;
+
+  for (const auto &[ext, ty] : exts) {
+    if (type == ty) {
+      res += ext;
+    }
+  }
+
+  return res;
+}
+
+bool ext_pred::applies(std::filesystem::path &path) const {
+  auto ext = path.extension().string();
+  if (ext.empty()) {
+    return false;
+  }
+
+  if (_exts.ends_with(ext)) {
+    return true;
+  }
+
+  ext += ".";
+
+  return _exts.contains(ext);
 }

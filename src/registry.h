@@ -3,18 +3,28 @@
 
 #include "ts.h"
 #include <filesystem>
-#include <map>
 #include <string>
 #include <tree_sitter/api.h>
 #include <vector>
 
+class ext_pred final {
+  std::string _exts;
+
+  friend class mapping;
+  ext_pred(std::string exts) : _exts{exts} {}
+
+public:
+  bool applies(std::filesystem::path &) const;
+};
+
 class mapping {
-  std::map<std::string, std::string> exts;
+  std::vector<std::tuple<std::string, std::string>> exts;
 
 public:
   mapping();
 
   std::optional<std::string> resolve(std::filesystem::path &);
+  ext_pred rev(const std::string &ty);
 };
 
 class registry {
